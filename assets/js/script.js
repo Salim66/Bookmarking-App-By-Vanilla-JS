@@ -7,7 +7,10 @@ const overlay   = document.querySelector('.overlay');
 const bookmark_list     = document.querySelector('.bookmark-list');
 const bookmark_form     = document.querySelector('.bookmark-form');
 const bookmark_input    = document.querySelector('input[type=text]');
+const bookmarks         = JSON.parse(localStorage.getItem('bookmarks')) || [];
 
+fillBookmarksList(bookmarks);
+console.table(bookmarks);
 
 // define all functions w'll need
 function showFloater(){
@@ -23,16 +26,45 @@ function closeFloater(){
 // bookmark
 function createBookmark(e){
     e.preventDefault();
+
+    // add a new bookmark to the bookmark
+    const title     = bookmark_input.value;
+    const bookmark  = {
+        title : title
+    }
+    bookmarks.push(bookmark);
+    fillBookmarksList(bookmarks);
+    storeBookmarks(bookmarks);
+    // console.table(bookmarks);
     
-    let title           = bookmark_input.value;
-    let bookmark        = document.createElement('a'); 
-    bookmark.className  = 'bookmark';
-    bookmark.innerHTML  = title;
-    bookmark.href       = '#';
-    bookmark.target     = '_blank';
-    bookmark_list.appendChild(bookmark);
+    // let title           = bookmark_input.value;
+    // let bookmark        = document.createElement('a'); 
+    // bookmark.className  = 'bookmark';
+    // bookmark.innerHTML  = title;
+    // bookmark.href       = '#';
+    // bookmark.target     = '_blank';
+    // bookmark_list.appendChild(bookmark);
 
     bookmark_form.reset();
+}
+
+function fillBookmarksList(bookmarks = []){
+
+    bookmark_list.innerHTML = bookmarks.map((bookmark) => {
+        return `<a class="bookmark" href="#">${bookmark.title}</a>`;
+    }).join('');
+
+
+    // let bookmarksHTML = '';
+    // for(let i = 0; i < bookmarks.length; i++){
+    //     bookmarksHTML += `<a class="bookmark" href="#">${bookmarks[i].title}</a>`;
+    // }
+    // console.log(bookmarksHTML);
+    // bookmark_list.innerHTML = bookmarksHTML;
+}
+
+function storeBookmarks(bookmarks = []){
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
 }
 
 
