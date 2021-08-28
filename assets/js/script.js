@@ -34,7 +34,7 @@ function createBookmark(e){
     e.preventDefault();
 
     if(!bookmark_input.value){
-        alert('We need to info/link');
+        alert('We need to info');
         return;
     }
 
