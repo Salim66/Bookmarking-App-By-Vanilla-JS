@@ -111,8 +111,9 @@ body.show-floater .overlay {
     border-radius: 3px;
     background-image: url('https://avatars.githubusercontent.com/u/61575024?v=4');
     background-size: cover;
-    width: 80px;
-    height: 60px;
+    background-position: top center;
+    width: 120px;
+    height: 80px;
     margin-right: 20px;
 }
 
