@@ -10,7 +10,7 @@ const bookmark_input    = document.querySelector('input[type=text]');
 const bookmarks         = JSON.parse(localStorage.getItem('bookmarks')) || [];
 
 fillBookmarksList(bookmarks);
-console.table(bookmarks);
+// console.table(bookmarks);
 
 // define all functions w'll need
 function showFloater(){
@@ -50,8 +50,12 @@ function createBookmark(e){
 
 function fillBookmarksList(bookmarks = []){
 
-    bookmark_list.innerHTML = bookmarks.map((bookmark) => {
-        return `<a class="bookmark" href="#">${bookmark.title}</a>`;
+    bookmark_list.innerHTML = bookmarks.map((bookmark, i) => {
+        return `<a class="bookmark" href="#" data-id="${i}">
+                    <div class="img"></div>
+                    <div class="title">${bookmark.title}</div>
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>`;
     }).join('');
 
 
@@ -67,6 +71,19 @@ function storeBookmarks(bookmarks = []){
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
 }
 
+function removeBookmark(e){
+    if(!e.target.matches('.glyphicon-remove')) return ;
+
+    // find the index
+    // remove from the bookmark using splice
+    // fill the list 
+    // store back to localhost
+    let index = e.target.parentNode.dataset.id;
+    bookmarks.splice(index, 1);
+    fillBookmarksList(bookmarks);
+    storeBookmarks(bookmarks);
+}
+
 
 // add event linsteners
 input.addEventListener('focusin', showFloater);
@@ -74,3 +91,4 @@ input.addEventListener('focusout', closeFloater);
 overlay.addEventListener('click', closeFloater);
 // bookmark
 bookmark_form.addEventListener('submit', createBookmark);
+bookmark_list.addEventListener('click', removeBookmark);
